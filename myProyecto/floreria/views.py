@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #importamos las clases del modelo
-from .models import Producto,Cliente
+from .models import Producto,Cliente,Estado
 #importamos las extensiones para autenticar
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login as auth_login
@@ -27,4 +27,39 @@ def cerrar_sesion(request):
 @login_required(login_url='/login/')
 def home(request):
     return render(request,'core/index.html')
+
+#Método para agregar productos y se añadan a la galería de forma automática
+@login_required(login_url='/login/')
+def formulario(request):
+    esta=Estado.objects.all()#Select * from Estado
+    if request.POST:
+        nombre=request.POST.get("txtNombreFlor")
+        valor=request.POST.get("txtValor")
+        cantidad=request.POST.get("txtStock")
+        descripcion=request.POST.get("txtDescripcion")
+        estado=request.POST.get("cboEstado")
+        #recupera el objeto con 'name' enviado desde el comboBox (cboEstado)
+        obj_estado=Estado.objects.get(name=estado)
+        #recuperar la imagen desde el formulario
+        imagen=request.FILES.get("txtImagen")
+        #crear una instancia de Producto en el modelo
+        producto=Producto(
+            name=nombre,
+            descripcion=descripcion,
+            valor=valor,
+            estado=obj_estado,
+            stock=cantidad,                                
+            foto=imagen
+        )
+        producto.save() #graba el objeto en la BD
+        return render(request,'core/formulario.html',{'lista':esta,'msg':'grabo','sw':True})
+    return render(request,'core/formulario.html',{'lista':esta})#pasan los datos a la web
+
+#Método para mostrar la galería...PENDIENTE!!--> 
+
+@login_required(login_url='/login/')
+def galeria(request):
+    flores=Producto.objects.all()# select * from producto     
+    return render(request, 'core/galeria.html',{'listaflores':flores})
+
     

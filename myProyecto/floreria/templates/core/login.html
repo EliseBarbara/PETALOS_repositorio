@@ -1,7 +1,7 @@
 {% extends "core/base.html" %} {% block titulo %} Login de Acceso {% endblock titulo %} {% block contenido %}
 <h1>Formulario Login de Acceso</h1>
 
-<form name="formulario" method="POST" action="{% url 'LOGIN_INICIAR' %}">
+<form name="formulario_login" method="POST" action="{% url 'LOGIN_INICIAR' %}">
     {% csrf_token %}
     <center>
         <div class="form-group col-sm-4">

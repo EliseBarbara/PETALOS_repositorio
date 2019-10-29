@@ -35,12 +35,17 @@
                     <a class="navbar-brand" href="{% url 'HOME' %}">HOME</a>
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'HOME' %}">Home
+                            <a class="nav-link" href="#">NOSOTROS
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'GALE' %}">GALERIA
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                            <a class="nav-link" href="{% url 'FORMU' %}">FORMULARIO PRODUCTOS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'CERRAR_SESION' %}">LOGOUT<a>
