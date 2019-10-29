@@ -1,0 +1,22 @@
+{% extends "core/base.html" %} {% block titulo %} Login de Acceso {% endblock titulo %} {% block contenido %}
+<h1>Formulario Login de Acceso</h1>
+
+<form name="formulario" method="POST" action="{% url 'LOGIN_INICIAR' %}">
+    {% csrf_token %}
+    <center>
+        <div class="form-group col-sm-4">
+            <label for="exampleInputEmail1">Ingrese nombre de Usuario</label>
+            <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Nombre Usuario">
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="exampleInputPassword1">Ingrese Contraseña</label>
+            <input type="password" class="form-control" id="txtPass" name="txtPass" placeholder="Contraseña">
+            <small id="recordarContraseña" class="form-text text-muted">¿Olvidó su contraseña?</small>
+            <!--- añadir boton de recuperar al lado de olvidó su contraseña, botón más pequeño-->
+        </div>
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+        <button class="btn btn-secondary">Registrar</button>
+    </center>
+</form>
+
+{% endblock contenido %}

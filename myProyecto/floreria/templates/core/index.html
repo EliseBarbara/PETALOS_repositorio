@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+
+{% block titulo %}
+    Menú principal - Florería Pétalos
+
+{% endblock titulo %}
+
+{% load static %}
+
+{% block contenido %}
+    <div class="central">
+        <h2>Florería Pétalos</h2>
+        <img src="{% static 'core/img/floreria_banner.jpg' %}" width="100%" alt="foto logo">
+    </div>
+{% endblock contenido %}
