@@ -10,4 +10,5 @@ urlpatterns = [
     path('cerrar_sesion/',cerrar_sesion,name='CERRAR_SESION'),
     path('formulario/',formulario,name='FORMU'),
     path('galeria/',galeria,name='GALE'),
+    path('eliminar_producto/<id>/',eliminar_producto,name='ELIMINAR'),
 ]

@@ -52,14 +52,26 @@ def formulario(request):
             foto=imagen
         )
         producto.save() #graba el objeto en la BD
-        return render(request,'core/formulario.html',{'lista':esta,'msg':'grabo','sw':True})
+        return render(request,'core/formulario.html',{'lista':esta,'msg':'Producto agregado a Galería','sw':True})
     return render(request,'core/formulario.html',{'lista':esta})#pasan los datos a la web
 
-#Método para mostrar la galería...PENDIENTE!!--> 
-
+#Método para mostrar la galería
 @login_required(login_url='/login/')
 def galeria(request):
     flores=Producto.objects.all()# select * from producto     
     return render(request, 'core/galeria.html',{'listaflores':flores})
 
+#Método para eliminar un producto desde la galería
+@login_required(login_url='/login/')
+def eliminar_producto(request,id):
+    mensaje=''    
+    producto=Producto.objects.get(name=id)
+    try:
+        producto.delete()
+        mensaje='El producto fue eliminado'
+    except:
+        mensaje='No se pudo eliminar el producto'
+    
+    flores=Producto.objects.all()
+    return render(request,'core/galeria.html',{'listaflores':flores,'msg':mensaje})
     

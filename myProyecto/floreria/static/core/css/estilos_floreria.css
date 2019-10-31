@@ -1,13 +1,50 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-section{
-    padding-top: 80px;
+    * {
+        margin: 0;
+        padding: 0;
+    }
     
+    section {
+        padding-top: 80px;
+    }
     
-}
-section h1{
-    text-align: center;
-    margin-bottom: 20px;
-}
+    section h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    section h2 {
+        padding-left: 15px;
+    }
+    
+    .producto {
+        width: 250px;
+        float: left;
+        border-radius: 2em;
+        padding: 25px;
+        text-align: center;
+        margin: 15px;
+    }
+    
+    .producto img {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .producto img:hover {
+        filter: brightness(0.9);
+    }
+    
+    .producto2 {
+        background-color: rgb(14, 13, 13);
+        padding: 6px;
+        border-radius: 2em;
+        color: white;
+    }
+    
+    .producto3 {
+        background-color: rgb(219, 23, 82);
+        padding: 6px;
+        border-radius: 2em;
+        color: white;
+    }
+    /*añadir tamaño responsivo a galería, se sugiere modificar section*/

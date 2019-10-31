@@ -6,21 +6,22 @@
 {% block contenido %}
 
 <!-- sector del menu -->
-    <h2>Catálogo de Productos</h2>
+    <h1>Catálogo de Productos</h1>
     
     {% for f in listaflores %}
-    <div>
+    <div class="producto">
         <h3>{{f.name}}</h3>
-        <img src="{{ f.foto.url }}">
-        <p>Descripción: {{f.descripcion}}</p>
+        <img src="{{ f.foto.url }}" class="rounded-lg">
+        <p>{{f.descripcion}}</p>
         <b><h4>Precio: ${{f.valor}}</h3></b>
         <p>Stock:{{f.stock}}</p>
         <p>{{f.estado}}</p>
-        <div>Eliminar Producto</div>
-        <div>Añadir al Carro</div>
-        
-            
+        <div class="producto2">
+            <a href="{% url 'ELIMINAR' f.name %}">Eliminar Producto</a>
+        </div>
+        <div  class="producto3">Añadir al Carro</div>
     </div>
     {% endfor %}
-    <h1>{{msg}}</h1>
+    
+    <h2>{{msg}}</h2>
 {% endblock contenido %}

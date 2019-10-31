@@ -1,39 +1,40 @@
 {% extends "core/base.html" %} {% block titulo %} Ingreso de Productos {% endblock titulo %} 
 {% block contenido %}
 <h1>Formulario Ingreso de Productos</h1>
-<div>
-    <form id="formulario_productos" action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
-        <center>
-            <h1>Ingrese Productos</h1>
-            <table>
+<div class="formulario_productos">
+    <center>
+    <form class="form-group col-sm-6" name="formulario_productos" action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+        
+            <br><table>
                 <tr>
-                    <td>Nombre:</td>
+                    <td><h5>Nombre:</h5></td>
                     <td>
-                        <input type="text" name="txtNombreFlor">
+                        <input type="text" class="form-control-sm" name="txtNombreFlor">
                     </td>
                 </tr>
                 <tr>
-                    <td>Valor:</td>
+                    <td><h5>Valor:</h5></td>
                     <td>
-                        <input type="number" name="txtValor">
+                        <input type="number" class="form-control-sm" name="txtValor">
                     </td>
                 </tr>
                 <tr>
-                    <td>Cantidad:</td>
+                    <td><h5>Cantidad:</h5></td>
                     <td>
-                        <input type="number" name="txtStock">
+                        <input type="number" class="form-control-sm" name="txtStock">
                     </td>
                 </tr>
                 <tr>
-                    <td>Descripcion:</td>
+                    <td><h5>Descripción:</h5></td>
                     <td>
-                        <textarea name="txtDescripcion"></textarea>
+                        <textarea name="txtDescripcion" class="form-control"></textarea>
                     </td>
                 </tr>
                 <tr>
-                    <td>Estado:</td>
+                    <td><h5>Estado:</h5></td>
                     <td>
-                        <select name="cboEstado">
+                        <select name="cboEstado" class="form-control-sm">
                             {% for datos in lista %}
                             <option>{{datos.name}}</option>
                             {% endfor %}
@@ -41,19 +42,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Seleccione Imagen:</td>
+                    <td><h5>Seleccione Imagen:</h5></td>
                     <td>
-                        <input type="file" name="txtImagen">
+                        <input type="file" class="form-control-sm" name="txtImagen">
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="submit" value="Grabar">
-                    </td>
-                </tr>
+                
             </table>
-        </center>
+            
+        <br><button type="submit" class="btn btn-primary">Grabar</button>
     </form>
+    </center>
     {% if sw %}
     <script>
         setTimeout(function() {
