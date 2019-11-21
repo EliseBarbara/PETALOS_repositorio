@@ -7,6 +7,14 @@ from django.contrib.auth import authenticate,logout,login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
+
+#Método para vaciar carro de compras
+def vaciar_carrito(request):
+    request.session["carro"]=""
+    lista=request.session.get("carro","")
+    return render(request,"core/carrito.html",{'lista':lista})
+
+
 def  login(request):
     return render(request,'core/login.html')
 
@@ -58,7 +66,7 @@ def formulario(request):
 #Método para mostrar la galería
 @login_required(login_url='/login/')
 def galeria(request):
-    flores=Producto.objects.all()# select * from producto     
+    flores=Producto.objects.all()# select * from Producto     
     return render(request, 'core/galeria.html',{'listaflores':flores})
 
 #Método para eliminar un producto desde la galería
@@ -74,4 +82,49 @@ def eliminar_producto(request,id):
     
     flores=Producto.objects.all()
     return render(request,'core/galeria.html',{'listaflores':flores,'msg':mensaje})
+
+#Métodos para administrar Carro de compras
+
+
+#Método para agregar productos al carro de compras
+@login_required(login_url='/login/')
+def agregar_carro(request,id):
+    #recuperar el valor del producto (select * from Producto where mane like (%id%))
+    producto=Producto.objects.filter(name__contains=id)
+    precio=producto.valor
+    #recuperar una sesion llamada 'carro' y de no existir no deja nada ''
+    sesion = request.session.get("carro","")
+    #buscar el producto en el interior del listado; split: separa elementos del arreglo que van mutando
+    arr=sesion.split(";")
+    #almacena los registros limpios
+    arr2=''
+    sw=0
+    cant=1
+    for f in arr:
+        flo=f.split(":")
+        if flo[0]==id:
+            cant=int(flo[1])+1
+            sw=1
+            arr2=arr2+str(flo[0])+":"+str(cant)+":"+str(precio)+";"
+        elif not flo[0]=="":#para q no recupere el "" como un elemento diferente
+            cant=flo[1]
+            arr2=arr2+str(flo[0])+":"+str(cant)+":"+str(precio)+";"
+    #verifica si el producto existe o no
+    if sw==0:
+        arr2=arr2+str(id)+":"+str(1)+":"+str(precio)+";"    
     
+    #en sesion carro almaceno lo que trae la sesion más el titulo del producto
+    request.session["carro"]=arr2
+    flores=Producto.objects.all()
+    #renderizar la pagina, pasandole el listado de productos
+    msg='Se agregó el Producto al carro de compras'
+    return render(request,'core/galeria.html',{'listaflores':flores,'msg':msg})
+
+@login_required(login_url='/login/')
+def carrito(request):
+    lista=request.session.get("carro","")
+    #le decimos como se separan los elementos
+    arr=lista.split(";")
+    return render(request,"core/carrito.html",{'lista':arr})
+
+

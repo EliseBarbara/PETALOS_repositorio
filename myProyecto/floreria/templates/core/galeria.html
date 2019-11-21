@@ -19,8 +19,9 @@
         <div class="producto2">
             <a href="{% url 'ELIMINAR' f.name %}">Eliminar Producto</a>
         </div>
-        <div  class="producto3">Añadir al Carro</div>
-    </div>
+        <div  class="producto3">
+            <a href="{% url 'AGREGAR_CARRO' f.name %}">Agregar al Carro</a>
+        </div>
     {% endfor %}
     
     <h2>{{msg}}</h2>
