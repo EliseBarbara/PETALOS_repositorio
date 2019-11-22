@@ -90,8 +90,9 @@ def eliminar_producto(request,id):
 @login_required(login_url='/login/')
 def agregar_carro(request,id):
     #recuperar el valor del producto (select * from Producto where mane like (%id%))
-    producto=Producto.objects.filter(name__contains=id)
+    producto=Producto.objects.get(name__contains=id)
     precio=producto.valor
+    
     #recuperar una sesion llamada 'carro' y de no existir no deja nada ''
     sesion = request.session.get("carro","")
     #buscar el producto en el interior del listado; split: separa elementos del arreglo que van mutando
@@ -123,7 +124,6 @@ def agregar_carro(request,id):
 @login_required(login_url='/login/')
 def carrito(request):
     lista=request.session.get("carro","")
-    #le decimos como se separan los elementos
     arr=lista.split(";")
     return render(request,"core/carrito.html",{'lista':arr})
 

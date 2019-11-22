@@ -18,11 +18,11 @@
     
     .producto {
         width: 250px;
-        float: left;
         border-radius: 2em;
         padding: 25px;
         text-align: center;
         margin: 15px;
+        float: left;
     }
     
     .producto img {
