@@ -1,12 +1,14 @@
 from django.shortcuts import render
 #importamos las clases del modelo
 from .models import Producto,Cliente,Estado
+from .forms import CustomUserForm
 #importamos las extensiones para autenticar
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login as auth_login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 
+#-------------INICIO/CERRAR SESION -------------------------------------------------
 def  login(request):
     return render(request,'core/login.html')
 
@@ -19,16 +21,35 @@ def login_iniciar(request):
             auth_login(request, usu)
             return render(request,'core/index.html')
     return render(request,'core/login.html')
-
+    
+@login_required(login_url='/login/')
 def cerrar_sesion(request):
     logout(request)
     return HttpResponse("<script>alert('cerró sesión');window.location.href='/';</script>")
+
+#-----------NUEVO USUARIO -----------------------------------------
+def registrar(request):
+    if request.method == 'POST':
+        user = request.POST.get("txtUsuario")
+        passs = request.POST.get("txtpassword")
+        correo = request.POST.get("txtCorreo")
+
+        formulario = CustomUserForm(
+            username = user,
+            password = passs,
+            email = correo,
+        )
+        formulario.save()
+    return render(request,'core/index.html')
+    
+
 
 @login_required(login_url='/login/')
 def home(request):
     return render(request,'core/index.html')
 
 #Método para agregar productos y se añadan a la galería de forma automática
+
 @login_required(login_url='/login/')
 def formulario(request):
     esta=Estado.objects.all()#Select * from Estado

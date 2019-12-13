@@ -1,22 +1,65 @@
 {% extends "core/base.html" %} {% block titulo %} Login de Acceso {% endblock titulo %} {% block contenido %}
-<h1>Formulario Login de Acceso</h1>
 
-<form name="formulario_login" method="POST" action="{% url 'LOGIN_INICIAR' %}">
-    {% csrf_token %}
-    <center>
-        <div class="form-group col-sm-4">
-            <label for="exampleInputEmail1">Ingrese nombre de Usuario</label>
-            <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Nombre Usuario">
-        </div>
-        <div class="form-group col-sm-4">
-            <label for="exampleInputPassword1">Ingrese Contraseña</label>
-            <input type="password" class="form-control" id="txtPass" name="txtPass" placeholder="Contraseña">
-            <!---<small id="recordarContraseña" class="form-text text-muted">¿Olvidó su contraseña?</small>
-            añadir boton de recuperar al lado de olvidó su contraseña, botón más pequeño-->
-        </div>
-        <button type="submit" class="btn btn-primary">Ingresar</button>
-        <button class="btn btn-secondary">Registrar</button>
-    </center>
-</form>
+<div>
+    <!----------------------- emergente ----------------------->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Registro Nuevo Usuario</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <form name="formulario_registro" method="post" action="{% url 'REGISTRAR' %}"> <!-- LOS DATOS LOS ENVIA A ÉSTA PAGINA ----------------------------------------------------------------------------------->
+                        {% csrf_token %}
+                        <div class="modal-body">
 
+                            <div class="form-group">
+                                <label for="usuario">Usuario</label>
+                                <input type="text" class="form-control" id="usuario" name="txtUsuario" required="true" placeholder="ingrese usuario">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="txtpassword" required="true" pattern="\.\-[A-Za-z0-9]" minlength="8" placeholder="ingrese password">
+                            </div>
+                            <div class="form-group">
+                                <label for="usuario">Correo</label>
+                                <input type="text" class="form-control" id="usuario" name="txtCorreo" required="true" placeholder="ej: juan@gmail.com">
+                            </div>
+
+                            <!-- fin formulario -->
+
+                        </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default" name="btnValida" value="btnValida">Enviar</button>
+                                <button type="reset" class="btn btn-default">Limpiar</button>
+                            </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+            <script src="js/jquery.js"></script>
+    <!----------------------- emergente ----------------------->
+    
+    <div>
+        <h1>Formulario Login de Acceso</h1>
+
+        <form name="formulario_login" method="POST" action="{% url 'LOGIN_INICIAR' %}">
+            {% csrf_token %}
+            <center>
+                <div class="form-group col-sm-4">
+                    <label for="exampleInputEmail1">Ingrese nombre de Usuario</label>
+                    <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Nombre Usuario" required="true">
+                </div>
+                <div class="form-group col-sm-4">
+                    <label for="exampleInputPassword1">Ingrese Contraseña</label>
+                    <input type="password" class="form-control" id="txtPass" name="txtPass" placeholder="Contraseña" required="true">
+                    <!---<small id="recordarContraseña" class="form-text text-muted">¿Olvidó su contraseña?</small>
+                    añadir boton de recuperar al lado de olvidó su contraseña, botón más pequeño-->
+                </div>
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+                <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#myModal">Registrar</button>
+            </center>
+        </form>
+    </div>
+</div>
 {% endblock contenido %}
