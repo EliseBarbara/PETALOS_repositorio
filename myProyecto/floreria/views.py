@@ -21,7 +21,7 @@ def login_iniciar(request):
             auth_login(request, usu)
             return render(request,'core/index.html')
     return render(request,'core/login.html')
-    
+
 @login_required(login_url='/login/')
 def cerrar_sesion(request):
     logout(request)
@@ -43,8 +43,6 @@ def registrar(request):
     return render(request,'core/index.html')
     
 
-
-@login_required(login_url='/login/')
 def home(request):
     return render(request,'core/index.html')
 
@@ -97,7 +95,6 @@ def eliminar_producto(request,id):
     return render(request,'core/galeria.html',{'listaflores':flores,'msg':mensaje})
 
 #Método para pagina Nosotros
-@login_required(login_url='/login/')
 def nosotros(request):
     return render(request,'core/nosotros.html')
 
