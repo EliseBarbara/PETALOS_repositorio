@@ -6,13 +6,11 @@
 {% load static %}
 
 {% block contenido %}
-
+<div class="container">
     <h1> Lista de Productos </h1>
     <table border="1">
         <tr>
-            <td>Nombre Producto</td>
-            <td>Cantidad</td>
-            <td>Precio</td>
+            <td><h4>Lista Productos</h4></td>
         </tr>
         {% for f in lista %}              
         <tr>
@@ -21,6 +19,9 @@
             <td></td>
         </tr>
         {% endfor %}
-    </table>
 
+    </table>
+            <input type="button" value="Grabar Carrito" onclick="javascript:location.href='{% url 'VACIARCARRITO' %}'" >
+                <h2>{{msg}}</h2>
+</div>
 {% endblock contenido %}

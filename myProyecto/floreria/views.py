@@ -7,14 +7,6 @@ from django.contrib.auth import authenticate,logout,login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
-
-#Método para vaciar carro de compras
-def vaciar_carrito(request):
-    request.session["carro"]=""
-    lista=request.session.get("carro","")
-    return render(request,"core/carrito.html",{'lista':lista})
-
-
 def  login(request):
     return render(request,'core/login.html')
 
@@ -131,5 +123,12 @@ def carrito(request):
     lista=request.session.get("carro","")
     arr=lista.split(";")
     return render(request,"core/carrito.html",{'lista':arr})
+
+#Método para vaciar carro de compras
+def vaciar_carrito(request):
+    request.session["carro"]=""
+    lista=request.session.get("carro","")
+    msg='Su pedido se está procesando. Le llegará un correo de confirmación del pedido y confirmación metodo pago. Muchas Gracias!!'     
+    return render(request,"core/carrito.html",{'lista':lista, 'msg':msg})
 
 
