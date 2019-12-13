@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+
+{% block titulo %}
+    Nosotros
+{% endblock titulo %}
+{% load static %}
+
+{% block contenido %}
+<div>
+    <img src="{% static 'core/img/fondo_nosotros.jpg' %}" height="150px" width="100%">
+</div>
+<section class="nosotros1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <img src="{% static 'core/img/flores1.jpg' %}" width="100%" height="80%">
+            </div>
+            <div class="col-sm-6">
+                <h1>FLORERÍA PÉTALOS</h1>
+                    <h4><p>Somos un grupo de empresas con largos años de trayectoria en el rubro de arreglos florales para todo 
+                    momento y ocasión, estamos distribuidos en todas las regiones y ciudades de Chile. 
+                    Toda nuestra experiencia adquirida se la debemos a cada uno de nuestros 
+                    distinguidos clientes que son el motivo fundamental que nos motiva a mejorar día a día, tanto en lo tecnológico, 
+                    así como también en nuestros diversos y modernos diseños.</p></h4>
+            </div>
+        </div>
+    </div>       
+</section>
+{% endblock contenido %}

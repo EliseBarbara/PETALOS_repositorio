@@ -83,6 +83,11 @@ def eliminar_producto(request,id):
     flores=Producto.objects.all()
     return render(request,'core/galeria.html',{'listaflores':flores,'msg':mensaje})
 
+#Método para pagina Nosotros
+@login_required(login_url='/login/')
+def nosotros(request):
+    return render(request,'core/nosotros.html')
+
 #Métodos para administrar Carro de compras
 
 
