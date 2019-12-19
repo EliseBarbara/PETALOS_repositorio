@@ -6,7 +6,8 @@ from .models import Producto
 #hacer clase que trasnferirá los datos
 class FlorSerializers(serializers.ModelSerializer):
     
-    #definir el modelo que se basa la clase y los datos que saldrán
+    #definir el modelo que se basa la clase y los datos que saldrán (los que no tambien)
     class Meta:
         model = Producto
-        fiels = ['name', 'descripcion', 'valor','estado','stock']
+        fiels = ['name', 'descripcion', 'valor','stock','estado', 'foto']
+        exclude = []
