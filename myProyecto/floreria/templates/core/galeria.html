@@ -1,13 +1,17 @@
-{% extends "core/base.html" %} 
-{% block titulo %} Galeria de Productos - Florería Pétalos 
-{% endblock titulo %} 
-{% load static %} 
+{% extends "core/base.html" %}
+{% block titulo %} Galeria de Productos - Florería Pétalos
+{% endblock titulo %}
+{% load static %}
 
 {% block contenido %}
 
 <!-- sector del menu -->
-    <h1>Catálogo de Productos</h1>
-    
+<div>
+    <center><h2>{{msg}}</h2></center>
+</div>
+<br>
+    <u><h1>Catálogo de Productos</h1></u>
+
     {% for f in listaflores %}
     <div class="producto">
         <h3>{{f.name}}</h3>
@@ -23,8 +27,7 @@
             <a href="{% url 'AGREGAR_CARRO' f.name %}">Agregar al Carro</a>
         </div>
     </div>
+
     {% endfor %}
-    
-    <h2>{{msg}}</h2>
-    
+
 {% endblock contenido %}

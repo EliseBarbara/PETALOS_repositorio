@@ -39,7 +39,7 @@
         </div><!-- /.modal -->
             <script src="js/jquery.js"></script>
     <!----------------------- emergente ----------------------->
-    
+
     <div>
         <h1>Formulario Login de Acceso</h1>
 
@@ -60,6 +60,11 @@
                 <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#myModal">Registrar</button>
             </center>
         </form>
+        <div class="mx-auto" style="width: 200px;">
+            <b><p></p><a href="{% url 'social:begin' 'facebook' %}">Login con Facebook</a></p></b>
+        </div>
+
     </div>
+
 </div>
 {% endblock contenido %}
