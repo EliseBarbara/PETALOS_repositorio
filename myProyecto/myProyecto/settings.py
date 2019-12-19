@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'floreria.apps.FloreriaConfig',
     'social_django',
     'rest_framework',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,6 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+#service worker (decirle dónde está)
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'serviceworker.js')
