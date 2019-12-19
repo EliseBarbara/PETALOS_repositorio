@@ -149,4 +149,3 @@ def vaciar_carrito(request):
     msg='Su pedido se está procesando. Le llegará un correo de confirmación del pedido y confirmación metodo pago. Muchas Gracias!!'     
     return render(request,"core/carrito.html",{'lista':lista, 'msg':msg})
 
-
