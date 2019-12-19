@@ -2,6 +2,11 @@
 from django.contrib import admin
 from django.urls import path,include
 from .views import *
+# importar desde el rest_framework, ruta para API
+from rest_framework import routers
+
+router = routers.DefaultRouter() #agrega ruta para la api
+router.register('flores', FlorViewSet) #get y post
 
 urlpatterns = [
     path('',home,name='HOME'),
@@ -16,4 +21,5 @@ urlpatterns = [
     path('enviar_carrito/',vaciar_carrito,name='VACIARCARRITO'),
     path('nosotros/',nosotros,name='NOSOTROS'),
     path('registrar/',registrar,name='REGISTRAR'),
+    path('api/',include(router.urls)),
 ]

@@ -13,7 +13,7 @@ class Producto(models.Model):
     valor=models.IntegerField()
     estado=models.ForeignKey(Estado,on_delete=models.CASCADE)
     stock=models.IntegerField()
-    foto=models.ImageField(upload_to="flores",null=True)
+    foto=models.ImageField(upload_to="flores",null=True, blank=True)
 
     def __str__(self):
         return self.name

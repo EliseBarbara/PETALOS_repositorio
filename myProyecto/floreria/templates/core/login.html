@@ -37,7 +37,6 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-            <script src="js/jquery.js"></script>
     <!----------------------- emergente ----------------------->
 
     <div>
@@ -60,11 +59,13 @@
                 <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#myModal">Registrar</button>
             </center>
         </form>
-        <div class="mx-auto" style="width: 200px;">
-            <b><p></p><a href="{% url 'social:begin' 'facebook' %}">Login con Facebook</a></p></b>
-        </div>
-
+        <p>
+        <center>
+            <button class="btn btn-secondary" type="button">
+            <!-- <div class="mx-auto" style="width: 200px;"> -->
+                <b><a href="{% url 'social:begin' 'facebook' %}" style="color:#FDFEFE;">Login con Facebook </a></b>
+            </button>
+        </center>
     </div>
-
 </div>
 {% endblock contenido %}

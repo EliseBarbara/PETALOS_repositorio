@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login as auth_login
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
+#importamos desde el rest_framework
+from rest_framework import viewsets
+from .serializers import FlorSerializers
 
 #-------------INICIO/CERRAR SESION -------------------------------------------------
 def  login(request):
@@ -149,3 +152,8 @@ def vaciar_carrito(request):
     msg='Su pedido se está procesando. Le llegará un correo de confirmación del pedido y confirmación metodo pago. Muchas Gracias!!'     
     return render(request,"core/carrito.html",{'lista':lista, 'msg':msg})
 
+
+#-------------------------Métodos API REST (viewset)
+class FlorViewSet(viewsets.ModelViewSet):
+    queryset = Producto.objects.all()
+    serializer_class = FlorSerializers #esta clase pasará todo a JSON
