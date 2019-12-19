@@ -38,3 +38,36 @@ self.addEventListener('fetch', function(event) {
         })
     );
 });
+
+
+//codigo para notificaciones push
+importScripts('https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js');
+
+var firebaseConfig = {
+    apiKey: "AIzaSyAZvhbLJXBd2UqT23ib92MpsWnU7FL4_s8",
+    authDomain: "floreria-petalos.firebaseapp.com",
+    databaseURL: "https://floreria-petalos.firebaseio.com",
+    projectId: "floreria-petalos",
+    storageBucket: "floreria-petalos.appspot.com",
+    messagingSenderId: "544171637408",
+    appId: "1:544171637408:web:981f0b0840b4a56b9fe7c5",
+    measurementId: "G-F97TZJEKSX"
+};
+
+firebase.initializeApp(firebaseConfig);
+let messaging = firebase.messaging();
+
+// recepción notificaciones  ----------------------------------------------
+messaging.setBackgroundMessageHandler(function(payload) {
+    let data = payload;
+    let title = payload.notification.title;
+
+    let options = {
+        body: ayload.notification.body,
+        icon: ayload.notification.icon
+    }
+
+    self.registration.showNotification(title, options);
+
+})

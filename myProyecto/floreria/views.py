@@ -10,6 +10,41 @@ from django.http import HttpResponse
 #importamos desde el rest_framework
 from rest_framework import viewsets
 from .serializers import FlorSerializers
+#importamos para las funciones de la notificaciones push
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt #para que no pida obligatoriamente el token en caso de no tenerlo
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.core import serializers
+import json
+from fcm_django.models import FCMDevice #la tabla que migramos
+
+
+#-------------configuracion PUSH-------------------------------------------------
+@csrf_exempt
+@require_http_methods(['POST'])
+def guardar_token(request):
+    body = request.body.decode('utf-8') #decodifico el json
+    bodyDict = json.loads(body) #lo transformo en un diccionario
+
+    token = bodyDict['token']
+
+    existe = FCMDevice.objects.filter(registration_id=token, active=True)
+    if len (existe) > 0:
+        return HttpResponseBadRequest(json.dumps({'mensaje':'el token ya existe'})) #transforma un diccionario a un json
+
+    dispositivo = FCMDevice()
+    dispositivo.registration_id=token #asignar token
+    dispositivo.active = True
+
+    #solo si el usuario está autenticado procedemos a enlazarlo
+    if request.user.is_authenticated:
+        dispositivo.user=request.user
+    try:
+        dispositivo.save()
+        return HttpResponse(json.dumps({'mensaje':'token guardado'}))
+    except:
+        return HttpResponseBadRequest(json.dumps({'mensaje':'no se ha podido guardar'}))
+
 
 #-------------INICIO/CERRAR SESION -------------------------------------------------
 def  login(request):
@@ -74,6 +109,16 @@ def formulario(request):
             foto=imagen
         )
         producto.save() #graba el objeto en la BD
+
+        #OBTENEMOS los dispositivos activos para enviar los mensajes
+        dispositivos = FCMDevice.objects.filter(active=True)
+        dispositivos.send_message(
+            title="Nuevo Producto Disponible",
+            body = "Hay un nuevo producto disponible en nuestra floreria",
+            icon = "/static/core/img/lirio_flor.jpg"
+        )
+
+
         return render(request,'core/formulario.html',{'lista':esta,'msg':'Producto agregado a Galería','sw':True})
     return render(request,'core/formulario.html',{'lista':esta})#pasan los datos a la web
 

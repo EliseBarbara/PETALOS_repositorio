@@ -9,7 +9,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         crossorigin="anonymous">
     <link href="{% static 'core/css/estilos_floreria.css' %}" type="text/css" rel="stylesheet">
@@ -18,10 +17,93 @@
         
         {% endblock titulo %}
     </title>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js"></script> -->
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script> 
+    
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAZvhbLJXBd2UqT23ib92MpsWnU7FL4_s8",
+            authDomain: "floreria-petalos.firebaseapp.com",
+            databaseURL: "https://floreria-petalos.firebaseio.com",
+            projectId: "floreria-petalos",
+            storageBucket: "floreria-petalos.appspot.com",
+            messagingSenderId: "544171637408",
+            appId: "1:544171637408:web:981f0b0840b4a56b9fe7c5",
+            measurementId: "G-F97TZJEKSX"
+        };
+        // Initialize Firebase ----------------------------------------------
+        firebase.initializeApp(firebaseConfig);
+        //firebase.analytics();
+
+        let messaging = firebase.messaging();
+
+        //enlazar serviceworker para que firebase sepa que yo tengo uno propio y no lo sorbreescriba
+        navigator.serviceworker
+        .register('myProyecto/serviceworker.js')
+        .then(function(register){
+            messaging.useServiceWorker(register); //registramos nuestro serviceWorker en firebase
+
+            //Preguntar al usuario si quiere recibir notificaciones push
+            messaging.requestPermission()
+            .then(function(){ //acepta
+                console.log("El usuario ha aceptado recibir notificaciones")
+                return messaging.getToken(); //se conecta a Firefox y obtener un token para éste usuario
+            })
+            .then(function(token){
+                console.log(token);
+
+                //enviaremos el token hacia django para guardar en la BD
+                fetch('guardar-token/',{
+                    methosd: 'post',
+                    headers: {
+                        'Content-Type':'application/json',
+                        'Accept':'application/json'
+                    },
+                    body: JSON.stringify({
+                        'token':token
+                    })
+                })
+                .then(function(resultado){
+                    console.log("Se ha guardado el Token")
+                })
+                .catch(function(ero){
+                    console.log("No se ha podido guardar el Token")
+                })
+
+            })
+
+            .catch(function(ex){ //no acepta
+                console.log("El usuario no desea recibir notificaciones")
+            }) 
+        })
+
+        //Codificación de la recepción de las notificaciones push
+        messaging.onMessage(function(payload){
+            let data = payload;
+            let title = payload.notification.title;
+
+            let options = {
+                body: ayload.notification.body,
+                icon: ayload.notification.icon
+            }
+
+            let mensaje = new Notification(title, options);
+        })
+
+    </script>
 </head>
 
 <body>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v5.0&appId=777133899459575&autoLogAppEvents=1"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
